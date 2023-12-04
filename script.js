@@ -1,17 +1,24 @@
-function handleOrderSelection(elementId, orderElementId) {
-  var menuItem = document.getElementById(elementId);
-  var orderItem = document.getElementById(orderElementId);
-
-  menuItem.addEventListener('click', function(e) {
+// Определяем обработчик для открытия/закрытия подменю
+function handleSubMenu(submenuElement) {
+  submenuElement.addEventListener('click', function(e) {
     e.preventDefault();
-    orderItem.classList.toggle('checked');
-    updateOrderList(orderElementId, orderItem.classList.contains('checked'));
+    var submenu = this.nextElementSibling;
+    submenu.style.display = submenu.style.display === 'none' || submenu.style.display === '' ? 'block' : 'none';
   });
 }
 
-function updateOrderList(orderElementId, isChecked) {
+// Определяем обработчик для выбора пункта меню
+function handleOrderSelection(orderElementId) {
+  var orderItem = document.getElementById(orderElementId);
+  orderItem.addEventListener('click', function() {
+    this.classList.toggle('checked');
+    updateOrderList(this.id, this.classList.contains('checked'), this.previousElementSibling.textContent);
+  });
+}
+
+// Функция обновления списка заказа
+function updateOrderList(orderElementId, isChecked, orderText) {
   var orderList = document.getElementById('orderList');
-  var orderText = document.getElementById(orderElementId).previousSibling.textContent;
   var existingOrderItem = document.querySelector(`#${orderElementId}-item`);
 
   if (isChecked && !existingOrderItem) {
@@ -24,11 +31,12 @@ function updateOrderList(orderElementId, isChecked) {
   }
 }
 
-handleOrderSelection('complexLink', 'complexOrder');
-handleOrderSelection('first-dish', 'firstDishOrder');
-handleOrderSelection('second-dish', 'secondDishOrder');
-handleOrderSelection('salad', 'saladOrder');
-handleOrderSelection('drink', 'drinkOrder');
-handleOrderSelection('pizza', 'pizzaOrder');
-handleOrderSelection('sushi', 'sushiOrder');
-handleOrderSelection('sausage', 'sausageOrder');
+// Назначаем обработчики для всех пунктов меню и подменю
+var menuItems = document.querySelectorAll('.menu ul li a');
+menuItems.forEach(function(item) {
+  if (item.nextElementSibling && item.nextElementSibling.tagName === 'UL') {
+    handleSubMenu(item);
+  } else {
+    handleOrderSelection(item.id);
+  }
+});
