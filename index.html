@@ -9,18 +9,25 @@
   <div class="menu">
     <h1>Меню:</h1>
     <ul>
-      <li><a href="#" id="complexLink">Комплексный обед</a></li>
+      <li><a href="#" id="complexLink">Комплексный обед</a><span class="order" id="complexOrder"></span></li>
       <li class="complexSubmenu" style="display: none;">
         <ul>
-          <li><a href="#first-dish">Первое блюдо</a></li>
-          <li><a href="#second-dish">Второе блюдо</a></li>
-          <li><a href="#salad">Салат</a></li>
-          <li><a href="#drink">Напиток</a></li>
+          <li><a href="#first-dish">Первое блюдо</a><span class="order" id="firstDishOrder"></span></li>
+          <li><a href="#second-dish">Второе блюдо</a><span class="order" id="secondDishOrder"></span></li>
+          <li><a href="#salad">Салат</a><span class="order" id="saladOrder"></span></li>
+          <li><a href="#drink">Напиток</a><span class="order" id="drinkOrder"></span></li>
         </ul>
       </li>
-      <li><a href="#pizza">Пицца</a></li>
-      <li><a href="#sushi">Суши</a></li>
-      <li><a href="#sausage">Колбаса</a></li>
+      <li><a href="#pizza">Пицца</a><span class="order" id="pizzaOrder"></span></li>
+      <li><a href="#sushi">Суши</a><span class="order" id="sushiOrder"></span></li>
+      <li><a href="#sausage">Колбаса</a><span class="order" id="sausageOrder"></span></li>
+    </ul>
+  </div>
+
+  <div class="orderSection">
+    <h2>Ваш заказ:</h2>
+    <ul id="orderList">
+      <!-- Элементы заказа будут добавлены сюда динамически -->
     </ul>
   </div>
 
