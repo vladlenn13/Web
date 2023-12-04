@@ -8,11 +8,13 @@ function handleSubMenu(submenuElement) {
 }
 
 // Определяем обработчик для выбора пункта меню
-function handleOrderSelection(orderElementId) {
+function handleOrderSelection(orderElementId, isSubMenu) {
   var orderItem = document.getElementById(orderElementId);
   orderItem.addEventListener('click', function() {
-    this.classList.toggle('checked');
-    updateOrderList(this.id, this.classList.contains('checked'), this.previousElementSibling.textContent);
+    if (!isSubMenu) {
+      this.classList.toggle('checked');
+      updateOrderList(this.id, this.classList.contains('checked'), this.previousElementSibling.textContent);
+    }
   });
 }
 
@@ -36,7 +38,8 @@ var menuItems = document.querySelectorAll('.menu ul li a');
 menuItems.forEach(function(item) {
   if (item.nextElementSibling && item.nextElementSibling.tagName === 'UL') {
     handleSubMenu(item);
+    handleOrderSelection(item.id, true); // Добавляем обработчик для пунктов меню-подменю
   } else {
-    handleOrderSelection(item.id);
+    handleOrderSelection(item.id, false); // Добавляем обработчик для пунктов меню-заказа
   }
 });
