@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Меню</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="menu">
+    <h1>Меню:</h1>
+    <ul>
+      <li><a href="#complex">Комплексный обед</a></li>
+      <li><a href="#first-dish">Первое блюдо</a>
+        <ul>
+          <li>вариант 1</li>
+          <li>вариант 2</li>
+          <li>вариант 3</li>
+        </ul>
+      </li>
+      <li><a href="#second-dish">Второе блюдо</a>
+        <ul>
+          <li>вариант 1</li>
+          <li>вариант 2</li>
+          <li>вариант 3</li>
+        </ul>
+      </li>
+      <li><a href="#salad">Салат</a>
+        <ul>
+          <li>вариант 1</li>
+          <li>вариант 2</li>
+          <li>вариант 3</li>
+        </ul>
+      </li>
+      <li><a href="#drink">Напиток</a>
+        <ul>
+          <li>вариант 1</li>
+          <li>вариант 2</li>
+          <li>вариант 3</li>
+        </ul>
+      </li>
+      <li><a href="#pizza">Пицца</a></li>
+      <li><a href="#sushi">Суши</a></li>
+      <li><a href="#sausage">Колбаса</a></li>
+    </ul>
+  </div>
+</body>
+</html>
