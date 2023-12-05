@@ -65,16 +65,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function generateTimeSlots() {
     const timeSlots = [];
-    const startTime = 10;
-    const endTime = 17;
-    const interval = 20;
+    const startTime = 10 * 60; // Время в минутах (10:00)
+    const endTime = 17 * 60; // Время в минутах (17:00)
+    const interval = 20; // Интервал в минутах
 
-    for (let hour = startTime; hour <= endTime; hour++) {
-        for (let minute = 0; minute < 60; minute += interval) {
-            const formattedHour = hour.toString().padStart(2, '0');
-            const formattedMinute = minute.toString().padStart(2, '0');
-            timeSlots.push(`${formattedHour}:${formattedMinute}`);
-        }
+    for (let minute = startTime; minute < endTime; minute += interval) {
+        const hours = Math.floor(minute / 60).toString().padStart(2, '0');
+        const minutes = (minute % 60).toString().padStart(2, '0');
+        timeSlots.push(`${hours}:${minutes}`);
     }
 
     return timeSlots;
