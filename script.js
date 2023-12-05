@@ -1,55 +1,30 @@
-
-// Определяем обработчик для открытия/закрытия подменю
-function handleSubMenu(submenuElement) {
-  submenuElement.addEventListener('click', function(e) {
-    e.preventDefault();
-    var submenu = this.nextElementSibling;
-    submenu.style.display = submenu.style.display === 'none' || submenu.style.display === '' ? 'block' : 'none';
-  });
+function addToCart(item) {
+    const cartItems = document.getElementById('cartItems');
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    cartItems.appendChild(listItem);
 }
 
-// Определяем обработчик для выбора пункта меню
-function handleOrderSelection(orderElementId, isSubMenu) {
-  var orderItem = document.getElementById(orderElementId);
-  orderItem.addEventListener('click', function() {
-    if (!isSubMenu) {
-      this.classList.toggle('checked');
-      updateOrderList(this.id, this.classList.contains('checked'), this.previousElementSibling.textContent);
-    }
-  });
+function checkout() {
+    window.location.href = 'checkout.html';
 }
 
-// Функция обновления списка заказа
-function updateOrderList(orderElementId, isChecked, orderText) {
-  var orderList = document.getElementById('orderList');
-  var existingOrderItem = document.querySelector(`#${orderElementId}-item`);
-
-  if (isChecked && !existingOrderItem) {
-    var li = document.createElement('li');
-    li.textContent = orderText;
-    li.id = `${orderElementId}-item`;
-    orderList.appendChild(li);
-  } else if (!isChecked && existingOrderItem) {
-    existingOrderItem.remove();
-  }
-}
-
-// Назначаем обработчики для всех пунктов меню и подменю
-var menuItems = document.querySelectorAll('.menu ul li a');
-menuItems.forEach(function(item) {
-  if (item.nextElementSibling && item.nextElementSibling.tagName === 'UL') {
-    handleSubMenu(item);
-    handleOrderSelection(item.id, true); // Добавляем обработчик для пунктов меню-подменю
-  } else {
-    handleOrderSelection(item.id, false); // Добавляем обработчик для пунктов меню-заказа
-  }
+document.getElementById('firstCourse').addEventListener('change', function() {
+    const selectedFirstCourse = this.value;
+    addToCart(selectedFirstCourse);
 });
 
-handleOrderSelection('complexLink', 'complexOrder');
-handleOrderSelection('first-dish', 'firstDishOrder');
-handleOrderSelection('second-dish', 'secondDishOrder');
-handleOrderSelection('salad', 'saladOrder');
-handleOrderSelection('drink', 'drinkOrder');
-handleOrderSelection('pizza', 'pizzaOrder');
-handleOrderSelection('sushi', 'sushiOrder');
-handleOrderSelection('sausage', 'sausageOrder');
+document.getElementById('secondCourse').addEventListener('change', function() {
+    const selectedSecondCourse = this.value;
+    addToCart(selectedSecondCourse);
+});
+
+document.getElementById('drink').addEventListener('change', function() {
+    const selectedDrink = this.value;
+    addToCart(selectedDrink);
+});
+
+document.getElementById('salad').addEventListener('change', function() {
+    const selectedSalad = this.value;
+    addToCart(selectedSalad);
+});
