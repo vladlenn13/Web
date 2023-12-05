@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var complexMealBtn = document.getElementById('complexMealBtn');
     var complexMealSubMenu = document.getElementById('complexMealSubMenu');
     var confirmComplexMealBtn = document.getElementById('confirmComplexMealBtn');
-    var checkoutBtn = document.getElementById('checkoutBtn');
     var cartItems = document.getElementById('cartItems');
 
     function updateOrderList(orderElementId, orderText) {
@@ -49,11 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
         complexMealSubMenu.style.display = 'none';
         confirmComplexMealBtn.style.display = 'none';
         resetSelects();
-    });
-
-    checkoutBtn.addEventListener('click', function () {
-        // Дополнительная логика для оформления заказа, если необходимо
-        // Здесь вы можете добавить обработку оформления заказа
     });
 
     var menuItems = document.querySelectorAll('.menuItem');
