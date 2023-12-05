@@ -4,24 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Выбор ячейки</title>
-    <!-- Подключение библиотеки для генерации QR-кодов -->
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <style>
-        /* Стили для страницы выбора ячейки */
+        /* Стили для ячеек */
         .cell {
             display: inline-block;
-            padding: 10px;
+            padding: 20px;
             margin: 10px;
             border: 1px solid #ccc;
             cursor: pointer;
+            background-color: #B9F6CA; /* Изначально свободные ячейки зеленого цвета */
         }
 
-        .cell.status-booked {
+        .cell.booked {
             background-color: #FFBABA; /* Ячейка занята */
         }
 
-        .cell.status-available {
-            background-color: #B9F6CA; /* Ячейка свободна */
+        .cell.reserved {
+            background-color: #FFCC80; /* Ячейка забронирована */
         }
     </style>
 </head>
@@ -30,52 +29,36 @@
     <h1>Выберите ячейку</h1>
 
     <div id="cellContainer">
-        <!-- Здесь будут QR-коды для ячеек -->
+        <!-- Здесь будут ячейки -->
     </div>
 
     <script>
-        // Пример данных о состоянии ячеек (замените на свои данные)
-        const cellData = [
-            { id: 1, status: 'booked' }, // Занятая ячейка
-            { id: 2, status: 'available' }, // Свободная ячейка
-            // Добавьте больше ячеек по мере необходимости
-        ];
+        const cells = document.querySelectorAll('.cell');
 
-        const cellContainer = document.getElementById('cellContainer');
+        cells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                const isBooked = cell.classList.contains('booked');
+                const isReserved = cell.classList.contains('reserved');
 
-        // Генерация QR-кодов для каждой ячейки
-        cellData.forEach(cell => {
-            const cellDiv = document.createElement('div');
-            cellDiv.classList.add('cell');
-            cellDiv.dataset.cellId = cell.id;
-
-            // Устанавливаем статус ячейки
-            if (cell.status === 'booked') {
-                cellDiv.classList.add('status-booked');
-            } else if (cell.status === 'available') {
-                cellDiv.classList.add('status-available');
-                cellDiv.addEventListener('click', () => {
-                    // Пользователь выбирает свободную ячейку
-                    reserveCell(cell.id);
-                });
-            }
-
-            const qrCode = new QRCode(cellDiv, {
-                text: `https://example.com/cell_status.html?cellId=${cell.id}&status=${cell.status}`,
-                width: 100,
-                height: 100,
+                if (isBooked) {
+                    alert('Ячейка занята, выберете другую!');
+                } else if (isReserved) {
+                    const confirmCancel = confirm('Вы хотите отменить бронь на эту ячейку?');
+                    if (confirmCancel) {
+                        cell.classList.remove('reserved');
+                        cell.classList.add('booked');
+                        alert('Вы успешно отменили бронь на ячейке');
+                    }
+                } else {
+                    const confirmBooking = confirm(`Вы хотите забронировать ячейку ${cell.dataset.id}?`);
+                    if (confirmBooking) {
+                        cell.classList.remove('available');
+                        cell.classList.add('reserved');
+                        alert(`Вы успешно забронировали ячейку ${cell.dataset.id}`);
+                    }
+                }
             });
-
-            cellContainer.appendChild(cellDiv);
         });
-
-        // Функция для бронирования ячейки
-        function reserveCell(cellId) {
-            // Здесь должна быть логика для бронирования ячейки
-            // Например, отправка запроса на сервер
-            alert(`Ячейка ${cellId} забронирована`);
-            // После бронирования обновите страницу или как-то иначе обновите данные
-        }
     </script>
 </body>
 
