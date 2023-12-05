@@ -1,4 +1,3 @@
-// JS-код
 // Определяем обработчик для открытия/закрытия подменю
 function handleSubMenu(submenuElement) {
   submenuElement.addEventListener('click', function(e) {
@@ -28,19 +27,30 @@ function updateOrderList(orderElementId, isChecked, orderText) {
     var li = document.createElement('li');
     li.textContent = orderText;
     li.id = `${orderElementId}-item`;
+
+    // Добавляем крестик для удаления из корзины
+    var deleteIcon = document.createElement('span');
+    deleteIcon.textContent = '❌';
+    deleteIcon.classList.add('deleteItem');
+    deleteIcon.addEventListener('click', function () {
+      li.remove();
+    });
+
+    li.appendChild(deleteIcon);
     orderList.appendChild(li);
   } else if (!isChecked && existingOrderItem) {
     existingOrderItem.remove();
   }
 }
 
-// Назначаем обработчики для всех пунктов меню и подменю
-var menuItems = document.querySelectorAll('.menu ul li a');
-menuItems.forEach(function(item) {
-  if (item.nextElementSibling && item.nextElementSibling.tagName === 'UL') {
-    handleSubMenu(item);
-    handleOrderSelection(item.id, true); // Добавляем обработчик для пунктов меню-подменю
-  } else {
-    handleOrderSelection(item.id, false); // Добавляем обработчик для пунктов меню-заказа
-  }
+document.addEventListener('DOMContentLoaded', function() {
+    var menuItems = document.querySelectorAll('.menu ul li a');
+    menuItems.forEach(function(item) {
+        if (item.nextElementSibling && item.nextElementSibling.tagName === 'UL') {
+            handleSubMenu(item);
+            handleOrderSelection(item.id, true); // Добавляем обработчик для пунктов меню-подменю
+        } else {
+            handleOrderSelection(item.id, false); // Добавляем обработчик для пунктов меню-заказа
+        }
+    });
 });
