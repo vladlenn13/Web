@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Статус ячейки</title>
+    <style>
+        /* Стили для страницы статуса ячейки */
+        .status {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .cancelButton {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .cancelButton:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Статус ячейки</h1>
+    <div class="status">
+        <!-- Здесь будет отображаться статус ячейки: свободна или занята -->
+    </div>
+    <button class="cancelButton" id="cancelReservation">Отменить бронь</button>
+
+    <script>
+        // Здесь нужно добавить логику для отображения статуса ячейки
+        // и функциональность для отмены брони, если ячейка забронирована
+        var statusDiv = document.querySelector('.status');
+        var cancelButton = document.getElementById('cancelReservation');
+
+        // Пример: получение статуса ячейки из URL (замените на свою логику)
+        var urlParams = new URLSearchParams(window.location.search);
+        var cellStatus = urlParams.get('status');
+
+        // Отображение статуса ячейки
+        statusDiv.textContent = 'Статус: ' + cellStatus;
+
+        // Пример: функция для отмены брони
+        cancelButton.addEventListener('click', function() {
+            // Здесь должна быть ваша логика для отмены брони
+            // Возможно, вам нужно отправить запрос на сервер для этого
+            alert('Бронь отменена');
+        });
+    </script>
+</body>
+
+</html>
