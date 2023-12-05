@@ -11,6 +11,7 @@
         }
 
         .cell {
+            position: relative;
             display: inline-block;
             padding: 20px;
             margin: 10px;
@@ -19,12 +20,22 @@
             background-color: #B9F6CA; /* Изначально свободные ячейки зеленого цвета */
         }
 
-        .cell.booked {
-            background-color: #FFBABA; /* Ячейка занята */
+        .cell.booked .status {
+            background-color: #FFBABA; /* Квадрат за QR-кодом, когда ячейка занята */
         }
 
-        .cell.reserved {
-            background-color: #FFCC80; /* Ячейка забронирована */
+        .cell.reserved .status {
+            background-color: #FFCC80; /* Квадрат за QR-кодом, когда ячейка забронирована */
+        }
+
+        .status {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: background-color 0.3s ease;
+            pointer-events: none; /* Чтобы события мыши не передавались этому элементу */
         }
 
         .qr-container {
@@ -65,7 +76,11 @@
                 qrImage.src = qr.toDataURL();
                 qrImage.alt = `QR-код для ячейки ${i}`;
 
+                const status = document.createElement('div');
+                status.classList.add('status');
+
                 qrContainer.appendChild(qrImage);
+                qrContainer.appendChild(status);
                 cellWrapper.appendChild(cellNumber);
                 cellWrapper.appendChild(qrContainer);
                 cellContainer.appendChild(cellWrapper);
