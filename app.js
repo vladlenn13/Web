@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var complexMealBtn = document.getElementById('complexMealBtn');
     var complexMealSubMenu = document.getElementById('complexMealSubMenu');
     var confirmComplexMealBtn = document.getElementById('confirmComplexMealBtn');
-    var checkoutBtn = document.getElementById('checkoutBtn');
+    var checkoutBtn = document.querySelector('button'); // Находим первую кнопку на странице
     var cartItems = document.getElementById('cartItems');
 
     function updateOrderList(orderElementId, orderText) {
@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     checkoutBtn.addEventListener('click', function() {
-        // Переход на страницу заказа при нажатии на кнопку "Оформить заказ"
         window.location.href = 'https://vladlenn13.github.io/Web/order';
     });
 
