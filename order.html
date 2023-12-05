@@ -33,30 +33,43 @@
     </div>
 
     <script>
-        const cells = document.querySelectorAll('.cell');
+        document.addEventListener('DOMContentLoaded', function () {
+            const cellContainer = document.getElementById('cellContainer');
 
-        cells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                const isBooked = cell.classList.contains('booked');
-                const isReserved = cell.classList.contains('reserved');
+            // Создаем ячейки
+            for (let i = 1; i <= 5; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.id = i;
+                cell.textContent = `Ячейка ${i}`;
+                cellContainer.appendChild(cell);
+            }
 
-                if (isBooked) {
-                    alert('Ячейка занята, выберете другую!');
-                } else if (isReserved) {
-                    const confirmCancel = confirm('Вы хотите отменить бронь на эту ячейку?');
-                    if (confirmCancel) {
-                        cell.classList.remove('reserved');
-                        cell.classList.add('booked');
-                        alert('Вы успешно отменили бронь на ячейке');
+            const cells = document.querySelectorAll('.cell');
+
+            cells.forEach(cell => {
+                cell.addEventListener('click', () => {
+                    const isBooked = cell.classList.contains('booked');
+                    const isReserved = cell.classList.contains('reserved');
+
+                    if (isBooked) {
+                        alert('Ячейка занята, выберете другую!');
+                    } else if (isReserved) {
+                        const confirmCancel = confirm('Вы хотите отменить бронь на эту ячейку?');
+                        if (confirmCancel) {
+                            cell.classList.remove('reserved');
+                            cell.classList.add('booked');
+                            alert('Вы успешно отменили бронь на ячейке');
+                        }
+                    } else {
+                        const confirmBooking = confirm(`Вы хотите забронировать ячейку ${cell.dataset.id}?`);
+                        if (confirmBooking) {
+                            cell.classList.remove('cell');
+                            cell.classList.add('reserved');
+                            alert(`Вы успешно забронировали ячейку ${cell.dataset.id}`);
+                        }
                     }
-                } else {
-                    const confirmBooking = confirm(`Вы хотите забронировать ячейку ${cell.dataset.id}?`);
-                    if (confirmBooking) {
-                        cell.classList.remove('available');
-                        cell.classList.add('reserved');
-                        alert(`Вы успешно забронировали ячейку ${cell.dataset.id}`);
-                    }
-                }
+                });
             });
         });
     </script>
