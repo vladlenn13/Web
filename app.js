@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var complexMealBtn = document.getElementById('complexMealBtn');
     var complexMealSubMenu = document.getElementById('complexMealSubMenu');
     var confirmComplexMealBtn = document.getElementById('confirmComplexMealBtn');
-    var checkoutBtn = document.querySelector('button'); // Находим первую кнопку на странице
     var cartItems = document.getElementById('cartItems');
 
     function updateOrderList(orderElementId, orderText) {
@@ -59,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('salad').selectedIndex = 0;
     }
 
+    var checkoutBtn = document.getElementById('checkoutBtn'); // Получаем кнопку "Оформить заказ"
     checkoutBtn.addEventListener('click', function() {
         saveOrderToLocalStorage(); // Сохраняем заказ перед переходом на страницу оформления заказа
         window.location.href = 'https://vladlenn13.github.io/Web/order';
