@@ -6,12 +6,7 @@
     <title>Выбор ячейки</title>
     <style>
         /* Стили для ячеек */
-        .cell-container {
-            text-align: center;
-        }
-
         .cell {
-            position: relative;
             display: inline-block;
             padding: 20px;
             margin: 10px;
@@ -20,26 +15,22 @@
             background-color: #B9F6CA; /* Изначально свободные ячейки зеленого цвета */
         }
 
-        .cell.booked .status {
-            background-color: #FFBABA; /* Квадрат за QR-кодом, когда ячейка занята */
+        .cell.booked {
+            display: inline-block;
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background-color: #FFBABA; /* Ячейка занята */
         }
 
-        .cell.reserved .status {
-            background-color: #FFCC80; /* Квадрат за QR-кодом, когда ячейка забронирована */
-        }
-
-        .status {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transition: background-color 0.3s ease;
-            pointer-events: none; /* Чтобы события мыши не передавались этому элементу */
-        }
-
-        .qr-container {
-            margin-bottom: 10px;
+        .cell.reserved {
+            display: inline-block;
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background-color: #FFCC80; /* Ячейка забронирована */
         }
     </style>
 </head>
@@ -47,16 +38,16 @@
 <body>
     <h1>Выберите ячейку</h1>
 
-    <div class="cell-container" id="cellContainer">
+    <div id="cellContainer">
         <!-- Здесь будут QR-коды -->
     </div>
 
+    <!-- Подключение библиотеки qrious -->
     <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const cellContainer = document.getElementById('cellContainer');
-
-            const selectedCells = JSON.parse(localStorage.getItem('selectedCells')) || {};
 
             for (let i = 1; i <= 5; i++) {
                 const cellWrapper = document.createElement('div');
@@ -65,9 +56,6 @@
                 const cellNumber = document.createElement('p');
                 cellNumber.textContent = `Ячейка №${i}`;
                 cellNumber.style.marginBottom = '5px';
-
-                const qrContainer = document.createElement('div');
-                qrContainer.classList.add('qr-container');
 
                 const qr = new QRious({
                     value: `https://vladlenn13.github.io/Web/order/${i}`,
@@ -78,18 +66,9 @@
                 qrImage.src = qr.toDataURL();
                 qrImage.alt = `QR-код для ячейки ${i}`;
 
-                const status = document.createElement('div');
-                status.classList.add('status');
-
-                qrContainer.appendChild(qrImage);
-                qrContainer.appendChild(status);
                 cellWrapper.appendChild(cellNumber);
-                cellWrapper.appendChild(qrContainer);
+                cellWrapper.appendChild(qrImage);
                 cellContainer.appendChild(cellWrapper);
-
-                if (selectedCells[i]) {
-                    cellWrapper.classList.add('booked');
-                }
 
                 cellWrapper.addEventListener('click', () => {
                     const isBooked = cellWrapper.classList.contains('booked');
@@ -101,7 +80,8 @@
                         const confirmCancel = confirm('Вы хотите отменить бронь на эту ячейку?');
                         if (confirmCancel) {
                             cellWrapper.classList.remove('reserved');
-                            localStorage.setItem('selectedCells', JSON.stringify(selectedCells));
+                            cellWrapper.classList.add('booked');
+                            localStorage.removeItem(`cell_${i}`);
                             alert('Вы успешно отменили бронь на ячейке');
                         }
                     } else {
@@ -109,12 +89,17 @@
                         if (confirmBooking) {
                             cellWrapper.classList.remove('cell');
                             cellWrapper.classList.add('reserved');
-                            selectedCells[i] = true;
-                            localStorage.setItem('selectedCells', JSON.stringify(selectedCells));
+                            localStorage.setItem(`cell_${i}`, 'reserved');
                             alert(`Вы успешно забронировали ячейку ${i}`);
                         }
                     }
                 });
+
+                // Проверяем состояние ячейки при загрузке страницы
+                if (localStorage.getItem(`cell_${i}`) === 'reserved') {
+                    cellWrapper.classList.remove('cell');
+                    cellWrapper.classList.add('reserved');
+                }
             }
         });
     </script>
