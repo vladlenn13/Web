@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cellContainer = document.getElementById('cellContainer');
+    const timeSlots = generateTimeSlots(); // Генерация временных слотов
 
     for (let i = 1; i <= 5; i++) {
         const cellWrapper = document.createElement('div');
@@ -8,9 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const cellNumber = document.createElement('p');
         cellNumber.textContent = `Ячейка №${i}`;
         cellNumber.style.marginBottom = '5px';
-
-        const qrContainer = document.createElement('div');
-        qrContainer.classList.add('qr-container');
 
         const qr = new QRious({
             value: `https://vladlenn13.github.io/Web/order/${i}`,
@@ -21,32 +19,63 @@ document.addEventListener('DOMContentLoaded', function () {
         qrImage.src = qr.toDataURL();
         qrImage.alt = `QR-код для ячейки ${i}`;
 
-        qrContainer.appendChild(qrImage);
         cellWrapper.appendChild(cellNumber);
-        cellWrapper.appendChild(qrContainer);
+        cellWrapper.appendChild(qrImage);
         cellContainer.appendChild(cellWrapper);
+
+        if (localStorage.getItem(`cell_${i}`) === 'reserved') {
+            cellWrapper.classList.add('reserved');
+            const reservationInfo = JSON.parse(localStorage.getItem(`reservation_${i}`));
+            const reservationText = document.createElement('p');
+            reservationText.textContent = `Ячейка забронирована пользователем: ${reservationInfo.name} Время бронирования: ${reservationInfo.time}`;
+            cellWrapper.appendChild(reservationText);
+        }
 
         cellWrapper.addEventListener('click', () => {
             const isBooked = cellWrapper.classList.contains('booked');
             const isReserved = cellWrapper.classList.contains('reserved');
 
             if (isBooked) {
-                alert('Ячейка занята, выберете другую!');
+                alert('Ячейка занята, выберите другую!');
             } else if (isReserved) {
-                const confirmCancel = confirm('Вы хотите отменить бронь на эту ячейку?');
-                if (confirmCancel) {
-                    cellWrapper.classList.remove('reserved');
-                    cellWrapper.classList.add('booked');
-                    alert('Вы успешно отменили бронь на ячейке');
-                }
+                const reservationInfo = JSON.parse(localStorage.getItem(`reservation_${i}`));
+                alert(`Ячейка забронирована пользователем: ${reservationInfo.name} Время бронирования: ${reservationInfo.time}`);
             } else {
-                const confirmBooking = confirm(`Вы хотите забронировать ячейку ${i}?`);
-                if (confirmBooking) {
-                    cellWrapper.classList.remove('cell');
-                    cellWrapper.classList.add('reserved');
-                    alert(`Вы успешно забронировали ячейку ${i}`);
+                const name = prompt('Введите ваше имя:');
+                if (name) {
+                    const selectedTime = prompt('Выберите время бронирования:\n' + timeSlots.join('\n'));
+                    if (selectedTime && timeSlots.includes(selectedTime)) {
+                        const time = new Date().toLocaleString();
+                        const reservationInfo = { name, time, selectedTime };
+                        localStorage.setItem(`cell_${i}`, 'reserved');
+                        localStorage.setItem(`reservation_${i}`, JSON.stringify(reservationInfo));
+                        cellWrapper.classList.add('reserved');
+                        const reservationText = document.createElement('p');
+                        reservationText.textContent = `Ячейка забронирована пользователем: ${name} Время бронирования: ${time}, ${selectedTime}`;
+                        cellWrapper.appendChild(reservationText);
+                        alert(`Вы успешно забронировали ячейку ${i}`);
+                    } else {
+                        alert('Выберите корректное время из списка');
+                    }
                 }
             }
         });
     }
 });
+
+function generateTimeSlots() {
+    const timeSlots = [];
+    const startTime = 10;
+    const endTime = 17;
+    const interval = 20;
+
+    for (let hour = startTime; hour <= endTime; hour++) {
+        for (let minute = 0; minute < 60; minute += interval) {
+            const formattedHour = hour.toString().padStart(2, '0');
+            const formattedMinute = minute.toString().padStart(2, '0');
+            timeSlots.push(`${formattedHour}:${formattedMinute}`);
+        }
+    }
+
+    return timeSlots;
+}
