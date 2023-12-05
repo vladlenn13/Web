@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var confirmComplexMealBtn = document.createElement('button');
 
     confirmComplexMealBtn.textContent = 'Подтвердить';
-    confirmComplexMealBtn.style.display = 'none';
     complexMealSubMenu.appendChild(confirmComplexMealBtn);
 
     function updateOrderList(orderElementId, isChecked, orderText) {
