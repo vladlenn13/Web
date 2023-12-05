@@ -20,14 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
             li.textContent = orderText;
             li.id = `${orderElementId}-item`;
 
-            var deleteIcon = document.createElement('span');
-            deleteIcon.textContent = '❌';
-            deleteIcon.classList.add('deleteItem');
-            deleteIcon.addEventListener('click', function() {
-                li.remove();
-            });
-
-            li.appendChild(deleteIcon);
             orderList.appendChild(li);
         } else if (!isChecked && existingOrderItem) {
             existingOrderItem.remove();
