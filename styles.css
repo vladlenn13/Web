@@ -75,3 +75,8 @@ nav ul li a {
 .cart button:hover {
     background-color: #555;
 }
+
+.deleteItem {
+  cursor: pointer;
+  margin-left: 5px;
+}
