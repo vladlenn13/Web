@@ -25,6 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function saveOrderToLocalStorage() {
+        var items = Array.from(cartItems.children).map(function(item) {
+            return item.textContent.replace('❌', '').trim(); // Получаем текст заказанных товаров
+        });
+
+        localStorage.setItem('orderItems', JSON.stringify(items)); // Сохраняем заказ в локальное хранилище
+    }
+
     complexMealBtn.addEventListener('click', function(e) {
         e.preventDefault();
         complexMealSubMenu.style.display = 'block';
@@ -52,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     checkoutBtn.addEventListener('click', function() {
+        saveOrderToLocalStorage(); // Сохраняем заказ перед переходом на страницу оформления заказа
         window.location.href = 'https://vladlenn13.github.io/Web/order';
     });
 
