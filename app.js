@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    var menuItems = document.querySelectorAll('.menu ul li a');
+    var menuItems = document.querySelectorAll('.menu li a');
     menuItems.forEach(function(item) {
         if (item.nextElementSibling && item.nextElementSibling.tagName === 'UL') {
             item.addEventListener('click', function(e) {
