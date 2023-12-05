@@ -61,6 +61,10 @@ document.addEventListener('DOMContentLoaded', function () {
         item.addEventListener('click', function () {
             var itemName = this.textContent;
             updateOrderList(itemName.replace(/\s+/g, ''), itemName);
+            menuItems.forEach(function (menuItem) {
+                menuItem.classList.remove('active');
+            });
+            this.classList.add('active');
         });
     });
 });
