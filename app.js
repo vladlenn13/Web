@@ -1,7 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var complexMealBtn = document.getElementById('complexMealBtn');
     var complexMealSubMenu = document.getElementById('complexMealSubMenu');
     var confirmComplexMealBtn = document.getElementById('confirmComplexMealBtn');
+    var checkoutBtn = document.getElementById('checkoutBtn');
     var cartItems = document.getElementById('cartItems');
 
     function updateOrderList(orderElementId, orderText) {
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var deleteIcon = document.createElement('span');
             deleteIcon.textContent = '❌';
             deleteIcon.classList.add('deleteItem');
-            deleteIcon.addEventListener('click', function() {
+            deleteIcon.addEventListener('click', function () {
                 li.remove();
             });
 
@@ -24,21 +25,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function saveOrderToLocalStorage() {
-        var items = Array.from(cartItems.children).map(function(item) {
-            return item.textContent.replace('❌', '').trim(); // Получаем текст заказанных товаров
-        });
-
-        localStorage.setItem('orderItems', JSON.stringify(items)); // Сохраняем заказ в локальное хранилище
+    function resetSelects() {
+        document.getElementById('firstCourse').selectedIndex = 0;
+        document.getElementById('secondCourse').selectedIndex = 0;
+        document.getElementById('drink').selectedIndex = 0;
+        document.getElementById('salad').selectedIndex = 0;
     }
 
-    complexMealBtn.addEventListener('click', function(e) {
+    complexMealBtn.addEventListener('click', function (e) {
         e.preventDefault();
         complexMealSubMenu.style.display = 'block';
         confirmComplexMealBtn.style.display = 'block';
     });
 
-    confirmComplexMealBtn.addEventListener('click', function(e) {
+    confirmComplexMealBtn.addEventListener('click', function (e) {
         e.preventDefault();
         var firstCourse = document.getElementById('firstCourse').value;
         var secondCourse = document.getElementById('secondCourse').value;
@@ -51,22 +51,14 @@ document.addEventListener('DOMContentLoaded', function() {
         resetSelects();
     });
 
-    function resetSelects() {
-        document.getElementById('firstCourse').selectedIndex = 0;
-        document.getElementById('secondCourse').selectedIndex = 0;
-        document.getElementById('drink').selectedIndex = 0;
-        document.getElementById('salad').selectedIndex = 0;
-    }
-
-    var checkoutBtn = document.getElementById('checkoutBtn'); // Получаем кнопку "Оформить заказ"
-    checkoutBtn.addEventListener('click', function() {
-        saveOrderToLocalStorage(); // Сохраняем заказ перед переходом на страницу оформления заказа
-        window.location.href = 'https://vladlenn13.github.io/Web/order';
+    checkoutBtn.addEventListener('click', function () {
+        // Дополнительная логика для оформления заказа, если необходимо
+        // Здесь вы можете добавить обработку оформления заказа
     });
 
     var menuItems = document.querySelectorAll('.menuItem');
-    menuItems.forEach(function(item) {
-        item.addEventListener('click', function() {
+    menuItems.forEach(function (item) {
+        item.addEventListener('click', function () {
             var itemName = this.textContent;
             updateOrderList(itemName.replace(/\s+/g, ''), itemName);
         });
