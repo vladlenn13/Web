@@ -14,16 +14,25 @@ nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul li {
-    display: inline-block;
     margin-right: 20px;
 }
 
 nav ul li a {
     text-decoration: none;
     color: #333;
+    display: block;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #ddd;
+    border-radius: 5px;
 }
 
 /* Стили для выпадающего меню */
@@ -39,6 +48,7 @@ nav ul li a {
     background-color: #fff;
     padding: 10px;
     border: 1px solid #ccc;
+    z-index: 1;
 }
 
 .dropdown:hover .submenu {
@@ -61,6 +71,9 @@ nav ul li a {
 .cart ul {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .cart button {
@@ -77,6 +90,26 @@ nav ul li a {
 }
 
 .deleteItem {
-  cursor: pointer;
-  margin-left: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/* Медиа-запросы для адаптации стилей под мобильные устройства */
+@media only screen and (max-width: 768px) {
+    header {
+        padding: 10px;
+    }
+
+    nav ul li {
+        margin-right: 10px;
+    }
+
+    .cart {
+        padding: 10px;
+    }
+
+    .cart button {
+        padding: 8px 16px;
+        margin-top: 8px;
+    }
 }
