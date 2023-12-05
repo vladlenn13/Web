@@ -1,35 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var complexMealBtn = document.getElementById('complexMealBtn');
-    var complexMealSubMenu = document.getElementById('complexMealSubMenu');
-    var confirmComplexMealBtn = document.getElementById('confirmComplexMealBtn');
-    var checkoutBtn = document.getElementById('checkoutBtn');
-    var cartItems = document.getElementById('cartItems');
-
-    function updateOrderList(orderElementId, orderText) {
-        var existingOrderItem = document.getElementById(`${orderElementId}-item`);
-
-        if (!existingOrderItem) {
-            var li = document.createElement('li');
-            li.textContent = orderText;
-            li.id = `${orderElementId}-item`;
-
-            var deleteIcon = document.createElement('span');
-            deleteIcon.textContent = '❌';
-            deleteIcon.classList.add('deleteItem');
-            deleteIcon.addEventListener('click', function() {
-                li.remove();
-            });
-
-            li.appendChild(deleteIcon);
-            cartItems.appendChild(li);
-        }
-    }
-
-    complexMealBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        complexMealSubMenu.style.display = 'block';
-        confirmComplexMealBtn.style.display = 'block';
-    });
 document.addEventListener('DOMContentLoaded', function () {
     const cellContainer = document.getElementById('cellContainer');
 
@@ -44,40 +12,14 @@ document.addEventListener('DOMContentLoaded', function () {
             size: 100 // Размер QR-кода
         });
 
-    confirmComplexMealBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        var firstCourse = document.getElementById('firstCourse').value;
-        var secondCourse = document.getElementById('secondCourse').value;
-        var drink = document.getElementById('drink').value;
-        var salad = document.getElementById('salad').value;
-        var orderText = `Комплексный обед: ${firstCourse}, ${secondCourse}, ${drink}, ${salad}`;
-        updateOrderList('complexMeal', orderText);
-        complexMealSubMenu.style.display = 'none';
-        confirmComplexMealBtn.style.display = 'none';
-        resetSelects();
-    });
         const qrImage = document.createElement('img');
         qrImage.src = qr.toDataURL();
         qrImage.alt = `QR-код для ячейки ${i}`;
 
-    function resetSelects() {
-        document.getElementById('firstCourse').selectedIndex = 0;
-        document.getElementById('secondCourse').selectedIndex = 0;
-        document.getElementById('drink').selectedIndex = 0;
-        document.getElementById('salad').selectedIndex = 0;
         cell.appendChild(qrImage);
         cellContainer.appendChild(cell);
     }
 
-    checkoutBtn.addEventListener('click', function() {
-        window.location.href = 'https://vladlenn13.github.io/Web/order';
-    });
-
-    var menuItems = document.querySelectorAll('.menuItem');
-    menuItems.forEach(function(item) {
-        item.addEventListener('click', function() {
-            var itemName = this.textContent;
-            updateOrderList(itemName.replace(/\s+/g, ''), itemName);
     const cells = document.querySelectorAll('.cell');
 
     cells.forEach(cell => {
@@ -105,3 +47,78 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+menu.html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Меню столовой Шабла</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Меню столовой Шабла</h1>
+        <nav>
+            <ul class="menu">
+                <li class="dropdown">
+                    <a href="#" id="complexMealBtn">Комплексный обед</a>
+                    <ul class="submenu" id="complexMealSubMenu" style="display: none;">
+                        <li>Первое блюдо:
+                            <select id="firstCourse">
+                                <option value="Суп">Суп</option>
+                                <option value="Борщ">Борщ</option>
+                                <option value="Солянка">Солянка</option>
+                            </select>
+                        </li>
+                        <li>Второе блюдо:
+                            <select id="secondCourse">
+                                <option value="Котлеты">Котлеты</option>
+                                <option value="Рыба">Рыба</option>
+                                <option value="Стейк">Стейк</option>
+                            </select>
+                        </li>
+                        <li>Напиток:
+                            <select id="drink">
+                                <option value="Чай">Чай</option>
+                                <option value="Кофе">Кофе</option>
+                                <option value="Сок">Сок</option>
+                            </select>
+                        </li>
+                        <li>Салаты:
+                            <select id="salad">
+                                <option value="Цезарь">Цезарь</option>
+                                <option value="Греческий">Греческий</option>
+                                <option value="Оливье">Оливье</option>
+                            </select>
+                        </li>
+                        <li><button id="confirmComplexMealBtn" style="display: none;">Подтвердить</button></li>
+                    </ul>
+                </li>
+                <li><a href="#" class="menuItem">Пицца</a></li>
+                <li><a href="#" class="menuItem">Суши</a></li>
+                <li><a href="#" class="menuItem">Липтон</a></li>
+                <li><a href="#" class="menuItem">Колбаса</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="cart">
+            <h2>Корзина</h2>
+            <ul id="cartItems">
+                <!-- Сюда будут добавляться выбранные товары -->
+            </ul>
+            <button id="checkoutBtn">Оформить заказ</button>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Здесь можете добавить дополнительную информацию или ссылки -->
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
