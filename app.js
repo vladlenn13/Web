@@ -56,24 +56,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Здесь вы можете добавить обработку оформления заказа
     });
 
-    var pizzaItem = document.querySelector('.menuItem:nth-child(2)');
-    var sushiItem = document.querySelector('.menuItem:nth-child(3)');
-    var liptonItem = document.querySelector('.menuItem:nth-child(4)');
-    var sausageItem = document.querySelector('.menuItem:nth-child(5)');
-
-    pizzaItem.addEventListener('click', function () {
-        updateOrderList('Pizza', 'Пицца');
-    });
-
-    sushiItem.addEventListener('click', function () {
-        updateOrderList('Sushi', 'Суши');
-    });
-
-    liptonItem.addEventListener('click', function () {
-        updateOrderList('Lipton', 'Липтон');
-    });
-
-    sausageItem.addEventListener('click', function () {
-        updateOrderList('Sausage', 'Колбаса');
+    var menuItems = document.querySelectorAll('.menuItem');
+    menuItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+            var itemName = this.textContent;
+            updateOrderList(itemName.replace(/\s+/g, ''), itemName);
+        });
     });
 });
