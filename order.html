@@ -6,6 +6,10 @@
     <title>Выбор ячейки</title>
     <style>
         /* Стили для ячеек */
+        .cell-container {
+            text-align: center;
+        }
+
         .cell {
             display: inline-block;
             padding: 20px;
@@ -28,14 +32,11 @@
 <body>
     <h1>Выберите ячейку</h1>
 
-    <div id="cellContainer">
+    <div class="cell-container" id="cellContainer">
         <!-- Здесь будут QR-коды -->
     </div>
 
-    <!-- Подключение библиотеки qrious -->
     <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
-    
-    <!-- Подключение скрипта order.js -->
     <script src="order.js"></script>
 </body>
 
