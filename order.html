@@ -15,22 +15,12 @@
             background-color: #B9F6CA; /* Изначально свободные ячейки зеленого цвета */
         }
 
-        .cell.booked {
-            display: inline-block;
-            padding: 20px;
-            margin: 10px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            background-color: #FFBABA; /* Ячейка занята */
+        .reserved {
+            background-color: #FFCC80; /* Ячейка забронирована */
         }
 
-        .cell.reserved {
-            display: inline-block;
-            padding: 20px;
-            margin: 10px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            background-color: #FFCC80; /* Ячейка забронирована */
+        .booked {
+            background-color: #FFBABA; /* Ячейка занята */
         }
     </style>
 </head>
@@ -70,6 +60,11 @@
                 cellWrapper.appendChild(qrImage);
                 cellContainer.appendChild(cellWrapper);
 
+                // Проверяем состояние ячейки при загрузке страницы
+                if (localStorage.getItem(`cell_${i}`) === 'reserved') {
+                    cellWrapper.classList.add('reserved');
+                }
+
                 cellWrapper.addEventListener('click', () => {
                     const isBooked = cellWrapper.classList.contains('booked');
                     const isReserved = cellWrapper.classList.contains('reserved');
@@ -80,26 +75,18 @@
                         const confirmCancel = confirm('Вы хотите отменить бронь на эту ячейку?');
                         if (confirmCancel) {
                             cellWrapper.classList.remove('reserved');
-                            cellWrapper.classList.add('booked');
                             localStorage.removeItem(`cell_${i}`);
                             alert('Вы успешно отменили бронь на ячейке');
                         }
                     } else {
                         const confirmBooking = confirm(`Вы хотите забронировать ячейку ${i}?`);
                         if (confirmBooking) {
-                            cellWrapper.classList.remove('cell');
                             cellWrapper.classList.add('reserved');
                             localStorage.setItem(`cell_${i}`, 'reserved');
                             alert(`Вы успешно забронировали ячейку ${i}`);
                         }
                     }
                 });
-
-                // Проверяем состояние ячейки при загрузке страницы
-                if (localStorage.getItem(`cell_${i}`) === 'reserved') {
-                    cellWrapper.classList.remove('cell');
-                    cellWrapper.classList.add('reserved');
-                }
             }
         });
     </script>
