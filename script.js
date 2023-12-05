@@ -1,3 +1,4 @@
+// JS-код
 // Определяем обработчик для открытия/закрытия подменю
 function handleSubMenu(submenuElement) {
   submenuElement.addEventListener('click', function(e) {
@@ -27,16 +28,6 @@ function updateOrderList(orderElementId, isChecked, orderText) {
     var li = document.createElement('li');
     li.textContent = orderText;
     li.id = `${orderElementId}-item`;
-
-    // Добавляем крестик для удаления из корзины
-    var deleteIcon = document.createElement('span');
-    deleteIcon.textContent = '❌';
-    deleteIcon.classList.add('deleteItem');
-    deleteIcon.addEventListener('click', function () {
-      li.remove();
-    });
-
-    li.appendChild(deleteIcon);
     orderList.appendChild(li);
   } else if (!isChecked && existingOrderItem) {
     existingOrderItem.remove();
