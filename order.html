@@ -63,6 +63,10 @@
                 // Проверяем состояние ячейки при загрузке страницы
                 if (localStorage.getItem(`cell_${i}`) === 'reserved') {
                     cellWrapper.classList.add('reserved');
+                    const reservationInfo = JSON.parse(localStorage.getItem(`reservation_${i}`));
+                    const reservationText = document.createElement('p');
+                    reservationText.textContent = `Ячейка забронирована пользователем: ${reservationInfo.name} Время бронирования: ${reservationInfo.time}`;
+                    cellWrapper.appendChild(reservationText);
                 }
 
                 cellWrapper.addEventListener('click', () => {
@@ -72,18 +76,26 @@
                     if (isBooked) {
                         alert('Ячейка занята, выберете другую!');
                     } else if (isReserved) {
-                        const confirmCancel = confirm('Вы хотите отменить бронь на эту ячейку?');
-                        if (confirmCancel) {
-                            cellWrapper.classList.remove('reserved');
-                            localStorage.removeItem(`cell_${i}`);
-                            alert('Вы успешно отменили бронь на ячейке');
-                        }
+                        const reservationInfo = JSON.parse(localStorage.getItem(`reservation_${i}`));
+                        alert(`Ячейка забронирована пользователем: ${reservationInfo.name} Время бронирования: ${reservationInfo.time}`);
                     } else {
-                        const confirmBooking = confirm(`Вы хотите забронировать ячейку ${i}?`);
-                        if (confirmBooking) {
-                            cellWrapper.classList.add('reserved');
-                            localStorage.setItem(`cell_${i}`, 'reserved');
-                            alert(`Вы успешно забронировали ячейку ${i}`);
+                        const name = prompt('Введите ваше имя:');
+                        if (name) {
+                            const time = prompt('Выберите время бронирования:');
+                            if (time) {
+                                const reservationInfo = { name, time };
+                                localStorage.setItem(`cell_${i}`, 'reserved');
+                                localStorage.setItem(`reservation_${i}`, JSON.stringify(reservationInfo));
+                                cellWrapper.classList.add('reserved');
+                                const reservationText = document.createElement('p');
+                                reservationText.textContent = `Ячейка забронирована пользователем: ${name} Время бронирования: ${time}`;
+                                cellWrapper.appendChild(reservationText);
+                                alert(`Вы успешно забронировали ячейку ${i}`);
+                            } else {
+                                alert('Выберите время бронирования!');
+                            }
+                        } else {
+                            alert('Введите ваше имя!');
                         }
                     }
                 });
