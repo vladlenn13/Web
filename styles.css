@@ -1,47 +1,77 @@
-/* Общие стили */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+/* Стили для заголовка и шапки */
+header {
+    background-color: #f8f8f8;
+    padding: 20px;
+    text-align: center;
 }
 
-.menu {
-  width: 80%;
-  margin: 20px auto;
+h1 {
+    margin: 0;
+    color: #333;
 }
 
-.menu ul {
-  list-style-type: none;
-  padding: 0;
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-.menu ul ul {
-  margin-left: 20px;
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
 }
 
-.menu ul li {
-  margin-bottom: 10px;
+nav ul li a {
+    text-decoration: none;
+    color: #333;
 }
 
-.menu ul li a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+/* Стили для выпадающего меню */
+.dropdown {
+    position: relative;
 }
 
-.menu ul ul li {
-  font-weight: normal;
-}
-/* Ваши стили */
-.order {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 1px solid #000;
-  margin-left: 10px;
-  cursor: pointer;
+.dropdown .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
 }
 
-.order.checked {
-  background-color: black;
+.dropdown:hover .submenu {
+    display: block;
+}
+
+/* Стили для корзины */
+.cart {
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.cart h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.cart ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cart button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.cart button:hover {
+    background-color: #555;
 }
