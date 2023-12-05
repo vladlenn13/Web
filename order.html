@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Выбор ячейки</title>
+    <!-- Подключение библиотеки для генерации QR-кодов -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <style>
+        /* Стили для страницы выбора ячейки */
+        .cell {
+            display: inline-block;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .cell.status-booked {
+            background-color: #FFBABA; /* Ячейка занята */
+        }
+
+        .cell.status-available {
+            background-color: #B9F6CA; /* Ячейка свободна */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Выберите ячейку</h1>
+
+    <div id="cellContainer">
+        <!-- Здесь будут QR-коды для ячеек -->
+    </div>
+
+    <script>
+        // Пример данных о состоянии ячеек (замените на свои данные)
+        const cellData = [
+            { id: 1, status: 'booked' }, // Занятая ячейка
+            { id: 2, status: 'available' }, // Свободная ячейка
+            // Добавьте больше ячеек по мере необходимости
+        ];
+
+        const cellContainer = document.getElementById('cellContainer');
+
+        // Генерация QR-кодов для каждой ячейки
+        cellData.forEach(cell => {
+            const cellDiv = document.createElement('div');
+            cellDiv.classList.add('cell');
+            cellDiv.dataset.cellId = cell.id;
+
+            // Устанавливаем статус ячейки
+            if (cell.status === 'booked') {
+                cellDiv.classList.add('status-booked');
+            } else if (cell.status === 'available') {
+                cellDiv.classList.add('status-available');
+                cellDiv.addEventListener('click', () => {
+                    // Пользователь выбирает свободную ячейку
+                    reserveCell(cell.id);
+                });
+            }
+
+            const qrCode = new QRCode(cellDiv, {
+                text: `https://example.com/cell_status.html?cellId=${cell.id}&status=${cell.status}`,
+                width: 100,
+                height: 100,
+            });
+
+            cellContainer.appendChild(cellDiv);
+        });
+
+        // Функция для бронирования ячейки
+        function reserveCell(cellId) {
+            // Здесь должна быть логика для бронирования ячейки
+            // Например, отправка запроса на сервер
+            alert(`Ячейка ${cellId} забронирована`);
+            // После бронирования обновите страницу или как-то иначе обновите данные
+        }
+    </script>
+</body>
+
+</html>
