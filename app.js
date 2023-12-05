@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     checkoutBtn.addEventListener('click', function() {
-        // Дополнительная логика для оформления заказа, если необходимо
-        // Здесь вы можете добавить обработку оформления заказа
+        // Переход на страницу заказа при нажатии на кнопку "Оформить заказ"
+        window.location.href = 'https://vladlenn13.github.io/Web/order';
     });
 
     var menuItems = document.querySelectorAll('.menuItem');
