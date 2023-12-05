@@ -1,11 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var complexMealBtn = document.getElementById('complexMealBtn');
-    var complexMealSubMenu = document.getElementById('complexMealSubMenu');
-    complexMealBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        complexMealSubMenu.style.display = complexMealSubMenu.style.display === 'none' || complexMealSubMenu.style.display === '' ? 'block' : 'none';
-    });
-
     function updateOrderList(orderElementId, isChecked, orderText) {
         var orderList = document.getElementById('cartItems');
         var existingOrderItem = document.querySelector(`#${orderElementId}-item`);
@@ -43,10 +36,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateOrderList(this.id, this.classList.contains('checked'), this.textContent);
             });
         }
-    });
-
-    var checkoutBtn = document.getElementById('checkoutBtn');
-    checkoutBtn.addEventListener('click', function() {
-        // Добавьте здесь логику оформления заказа, если требуется
     });
 });
