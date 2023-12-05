@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
+    var firstCourse = document.getElementById('firstCourse');
+    var secondCourse = document.getElementById('secondCourse');
+    var drink = document.getElementById('drink');
+    var salad = document.getElementById('salad');
+    var complexMealBtn = document.getElementById('complexMealBtn');
+    var complexMealSubMenu = document.getElementById('complexMealSubMenu');
+    var confirmComplexMealBtn = document.createElement('button');
+
+    confirmComplexMealBtn.textContent = 'Подтвердить';
+    confirmComplexMealBtn.style.display = 'none';
+    complexMealSubMenu.appendChild(confirmComplexMealBtn);
+
     function updateOrderList(orderElementId, isChecked, orderText) {
         var orderList = document.getElementById('cartItems');
         var existingOrderItem = document.getElementById(`${orderElementId}-item`);
@@ -22,17 +34,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    var menuItems = document.querySelectorAll('.menu a');
-    menuItems.forEach(function(item) {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (item.nextElementSibling && item.nextElementSibling.tagName === 'UL') {
-                var submenu = item.nextElementSibling;
-                submenu.style.display = submenu.style.display === 'none' || submenu.style.display === '' ? 'block' : 'none';
-            } else {
-                item.classList.toggle('checked');
-                updateOrderList(item.id, item.classList.contains('checked'), item.textContent);
-            }
-        });
+    complexMealBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        complexMealSubMenu.style.display = 'block';
+        confirmComplexMealBtn.style.display = 'block';
+    });
+
+    confirmComplexMealBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var orderText = `Комплексный обед: ${firstCourse.value}, ${secondCourse.value}, ${drink.value}, ${salad.value}`;
+        updateOrderList('complexMeal', true, orderText);
+        complexMealSubMenu.style.display = 'none';
+        confirmComplexMealBtn.style.display = 'none';
+        firstCourse.selectedIndex = 0;
+        secondCourse.selectedIndex = 0;
+        drink.selectedIndex = 0;
+        salad.selectedIndex = 0;
     });
 });
